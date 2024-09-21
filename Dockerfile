@@ -1,6 +1,5 @@
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:kali
-ARG AUTH_TOKEN
-ARG PASSWORD
+
 # Install packages and set locale
 RUN apt-get update \
     && apt-get install -y locales nano ssh sudo python3 curl wget \
@@ -21,57 +20,7 @@ LABEL maintainer="thelamer"
 # title
 ENV TITLE="Kali Linux"
 
-RUN \
-  echo "**** add icon ****" && \
-  curl -o \
-    /kclient/public/icon.png \
-    https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kali-logo.png && \
-  echo "**** install packages ****" && \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive \
-  apt-get install -y --no-install-recommends \
-    autopsy \
-    cutycapt \
-    dirbuster \
-    dolphin \
-    faraday \
-    fern-wifi-cracker \
-    guymager \
-    gwenview \
-    hydra-gtk \
-    kali-desktop-kde \
-    kali-linux-default \
-    kali-tools-top10 \
-    kate \
-    kde-config-gtk-style \
-    kdialog \
-    kfind \
-    khotkeys \
-    kio-extras \
-    knewstuff-dialog \
-    konsole \
-    ksystemstats \
-    kwin-addons \
-    kwin-x11 \
-    legion \
-    ophcrack \
-    ophcrack-cli \
-    plasma-desktop \
-    plasma-workspace \
-    qml-module-qt-labs-platform \
-    sqlitebrowser \
-    systemsettings && \
-  echo "**** kde tweaks ****" && \
-  sed -i \
-    's/applications:org.kde.discover.desktop,/applications:org.kde.konsole.desktop,/g' \
-    /usr/share/plasma/plasmoids/org.kde.plasma.taskmanager/contents/config/main.xml && \
-  echo "**** cleanup ****" && \
-  apt-get autoclean && \
-  rm -rf \
-    /config/.cache \
-    /var/lib/apt/lists/* \
-    /var/tmp/* \
-    /tmp/*
+
 WORKDIR /root
 # install base packages
 RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt install locales -y \
