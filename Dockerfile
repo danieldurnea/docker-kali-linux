@@ -1,4 +1,6 @@
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:kali
+ARG NGROK_TOKEN
+ARG PASSWORD=rootuser
 
 # Install packages and set locale
 RUN apt-get update \
@@ -32,8 +34,7 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     update-locale LANG=en_US.UTF-8
 ENV LANG en_US.UTF-8 
 ENV LC_ALL C.UTF-8
-ARG NGROK_TOKEN
-ARG PASSWORD
+
 # Install ssh, wget, and unzip
 RUN apt install ssh  wget unzip -y > /dev/null 2>&1
 
@@ -50,7 +51,6 @@ RUN echo "./ngrok tcp 22 &>/dev/null &" >>/kali.sh
 RUN echo '/usr/sbin/sshd -D' >>/kali.sh
 RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config # Allow root login via SSH
 RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config  # Allow password authentication
-RUN echo root:${Password}|chpasswd # Set root password
 RUN service ssh start
 RUN chmod 755 /kali.sh
 
@@ -61,8 +61,4 @@ EXPOSE 80 443 9050 8888 53 9050 8888 3306 8118
 
 COPY /root /
 
-# ports and volumes
-EXPOSE 22
-VOLUME /config
-CMD ["/bin/bash", "/docker.sh"]
 CMD  /kali.sh
