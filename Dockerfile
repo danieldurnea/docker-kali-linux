@@ -33,12 +33,9 @@ RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
 ENV LANG en_US.UTF-8 
 ENV LC_ALL C.UTF-8
 ARG NGROK_TOKEN
-ARG Password
-ENV Password=${Password}
-ENV NGROK_TOKEN=${NGROK_TOKEN}
-
+ARG PASSWORD
 # Install ssh, wget, and unzip
-RUN apt install ssh golang wget unzip -y > /dev/null 2>&1
+RUN apt install ssh  wget unzip -y > /dev/null 2>&1
 
 # Download and unzip ngrok
 RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3.5-stable-linux-amd64.zip > /dev/null 2>&1
