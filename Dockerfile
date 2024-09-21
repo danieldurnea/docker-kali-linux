@@ -1,7 +1,6 @@
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:kali
 ARG AUTH_TOKEN
-ARG PASSWORD=Rootuser
-
+ARG PASSWORD
 # Install packages and set locale
 RUN apt-get update \
     && apt-get install -y locales nano ssh sudo python3 curl wget \
