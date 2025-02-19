@@ -74,11 +74,11 @@ RUN service ssh start
 RUN chmod 755 /kali.sh
 
 # Expose port
-EXPOSE 80 443 9050 8888 53 9050 8888 3306 8118
+EXPOSE 80 443 9050 8888 53 9050 8888 3306 8118 3000
 
 # Start the shell script on container startup
 
 
 CMD  /kali.sh
-EXPOSE 3000
 VOLUME /config
+CMD  /kali.sh
