@@ -1,25 +1,40 @@
 FROM lscr.io/linuxserver/kali-linux:latest
-RUN apt-get -y update && apt-get -y upgrade -y && apt-get install -y sudo
-RUN sudo apt-get install -y curl ffmpeg git locales nano python3-pip screen ssh unzip wget  
-RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-ENTRYPOINT ["/bin/bash"]
+ARG NGROK_TOKEN
+ARG PASSWORD=rootuser
 
-FROM base AS wordlists
+# Install packages and set locale
+RUN apt-get update \
+    && apt-get install -y locales nano ssh sudo python3 curl libkf5config-bin  wget \
+    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
+    && rm -rf /var/lib/apt/lists/*
 
-ARG DEBIAN_FRONTEND=noninteractive
+# Configure SSH tunnel using ngrok
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=en_US.utf8
 
-# Install Seclists
-RUN mkdir -p /usr/share/seclists \
-    # The apt-get install seclists command isn't installing the wordlists, so clone the repo.
-    && git clone --depth 1 https://github.com/danielmiessler/SecLists.git /usr/share/seclists
 
-# Prepare rockyou wordlist
-RUN mkdir -p /usr/share/wordlists
-WORKDIR /usr/share/wordlists
-RUN cp /usr/share/seclists/Passwords/Leaked-Databases/rockyou.txt.tar.gz /usr/share/wordlists/ \
-    && tar -xzf rockyou.txt.tar.gz
+# set version label
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="thelamer"
+
+# title
+ENV TITLE="Kali Linux"
+
 
 WORKDIR /root
+# install base packages
+RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt install locales -y \
+&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+# configure locales
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+ENV LANG en_US.UTF-8 
+ENV LC_ALL C.UTF-8
+
 # Install ssh, wget, and unzip
 RUN apt install ssh  wget unzip -y > /dev/null 2>&1
 
@@ -40,10 +55,10 @@ RUN service ssh start
 RUN chmod 755 /kali.sh
 
 # Expose port
-EXPOSE 80 443 9050 8888 53 9050 3000 8888 3306 8118 3000
+EXPOSE 80 443 9050 8888 53 3000 9050 8888 3306 8118
 
 # Start the shell script on container startup
 
+COPY /root /
 
 CMD  /kali.sh
-VOLUME /config
