@@ -20,6 +20,7 @@ RUN apt-get update \
      iputils-ping \
      netcat-openbsd \
      nmap \
+     libkf5config-bin \
      openssh-client \
      openssl \
      ssh \
