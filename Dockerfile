@@ -1,4 +1,12 @@
 FROM ghcr.io/linuxserver/baseimage-kasmvnc:kali
+# set version label
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="thelamer"
+
+# title
+ENV TITLE="Kali Linux"
 ARG NGROK_TOKEN
 ARG PASSWORD=rootuser
 
