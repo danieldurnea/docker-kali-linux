@@ -21,16 +21,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.utf8
 
 
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="thelamer"
-
-# title
-ENV TITLE="Kali Linux"
-
-
 WORKDIR /root
 # install base packages
 RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt install locales -y \
