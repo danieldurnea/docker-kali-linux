@@ -1,6 +1,6 @@
 FROM lscr.io/linuxserver/kali-linux:latest
 ARG NGROK_TOKEN
-ARG PASSWORD=rootuser
+ARG PASSWORD
 
 # Install packages and set locale
 RUN apt-get update \
@@ -55,10 +55,14 @@ RUN service ssh start
 RUN chmod 755 /kali.sh
 
 # Expose port
-EXPOSE 80 443 9050 8888 53 3000 9050 8888 3306 8118
 
 # Start the shell script on container startup
 
 COPY /root /
 
+# add local files
+
+# ports and volumes
+EXPOSE 3000
+VOLUME /config
 CMD  /kali.sh
