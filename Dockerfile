@@ -21,11 +21,6 @@ ENV TITLE="Kali Linux"
 
 
 WORKDIR /root
-
-# configure locales
-RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-    dpkg-reconfigure --frontend=noninteractive locales && \
-    update-locale LANG=en_US.UTF-8
 ENV LANG en_US.UTF-8 
 ENV LC_ALL C.UTF-8
 
