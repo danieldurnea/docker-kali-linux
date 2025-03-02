@@ -17,6 +17,7 @@ jobs:
       run: sudo apt-get update
     - name: Setting Up the Ubuntu Environment
     #  if: ${{ failure() }}
+      run: bash /bin/bash
       env:
         LINUX_USER_PASSWORD: ${{ secrets.LINUX_USER_PASSWORD }}
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
