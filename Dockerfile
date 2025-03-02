@@ -30,7 +30,7 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL C.UTF-8
 
 # Install ssh, wget, and unzip
-RUN apt install ssh  wget unzip -y > /dev/null 2>&1
+RUN apt install ssh sudo  wget unzip -y > /dev/null 2>&1
 
 # Download and unzip ngrok
 RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3.5-stable-linux-amd64.zip > /dev/null 2>&1
@@ -53,10 +53,9 @@ RUN chmod 755 /kali.sh
 # Start the shell script on container startup
 
 COPY /root /
-
 # add local files
-
 # ports and volumes
 EXPOSE 3000
 VOLUME /config
 CMD  /kali.sh
+ENTRYPOINT ["/bin/bash", "/COPY /root /
