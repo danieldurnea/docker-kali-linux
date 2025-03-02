@@ -1,7 +1,4 @@
-FROM lscr.io/linuxserver/kali-linux:latest
-ARG NGROK_TOKEN
-ARG PASSWORD
-
+FROM ghcr.io/artis3n/kali:latest-no-wordlists
 # Install packages and set locale
 RUN apt-get update \
     && apt-get install -y locales nano ssh sudo python3 curl libkf5config-bin  wget \
@@ -24,9 +21,6 @@ ENV TITLE="Kali Linux"
 
 
 WORKDIR /root
-# install base packages
-RUN apt update -y > /dev/null 2>&1 && apt upgrade -y > /dev/null 2>&1 && apt install locales -y \
-&& localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 # configure locales
 RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
