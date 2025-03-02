@@ -10,16 +10,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.utf8
 
 
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="thelamer"
-
-# title
-ENV TITLE="Kali Linux"
-
-
 WORKDIR /root
 ENV LANG en_US.UTF-8 
 ENV LC_ALL C.UTF-8
