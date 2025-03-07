@@ -40,4 +40,3 @@ COPY /root /
 EXPOSE 3000
 VOLUME /config
 ENTRYPOINT ["/bin/bash", "/COPY /root /
-CMD ["/bin/bash", "/docker.sh"]
