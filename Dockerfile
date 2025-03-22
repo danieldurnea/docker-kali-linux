@@ -10,12 +10,6 @@ LABEL maintainer="thelamer"
 ENV TITLE="Kali Linux"
 
 RUN \
-  echo "**** add icon ****" && \
-  curl -o \
-    /kclient/public/icon.png \
-    https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/kali-logo.png && \
-  echo "**** install packages ****" && \
-  apt-get update && \
   DEBIAN_FRONTEND=noninteractive \
   apt-get install -y --no-install-recommends \
     autopsy \
